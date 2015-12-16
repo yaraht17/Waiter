@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Waiter</string>
+
+    <string name="user">user</string>
+    <string name="pass">password</string>
+
+    <string name="icon_toggle">&#xf0c9;</string>
+    <string name="icon_notif">&#xf0f3;</string>
+    <string name="extra_fee">EXTRA FEE</string>
+
+    <string name="hint_name">name</string>
+    <string name="hint_price">price</string>
+    <string name="description_extra_fee">Type extra fee of customer</string>
+</resources>
