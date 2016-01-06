@@ -1,27 +1,27 @@
 package com.buoistudio.model;
 
-
-public class DishItem {
+public class ExtraFeeItem {
+    private String id;
     private String name;
     private double price;
-    private String image;
 
-    public DishItem() {
-    }
-
-    public DishItem(String name, double price, String image) {
+    public ExtraFeeItem(String id, String name, double price) {
+        this.id = id;
         this.name = name;
         this.price = price;
-        this.image = image;
     }
 
-
-    public String getImage() {
-        return image;
+    public ExtraFeeItem(String name, double price) {
+        this.name = name;
+        this.price = price;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,5 +39,4 @@ public class DishItem {
     public void setPrice(double price) {
         this.price = price;
     }
-
 }

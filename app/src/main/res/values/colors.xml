@@ -4,7 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background">#32342f</color>
+
+    <color name="background_title">#BABABA</color>
     <color name="textColor">#6c2c44</color>
+    <color name="textColorTmp">#7d7d7d</color>
+
     <color name="white">#ffffff</color>
     <color name="black">#000</color>
+    <color name="red">#FD0002</color>
 </resources>

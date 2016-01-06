@@ -1,14 +1,35 @@
 <resources>
     <string name="app_name">Waiter</string>
 
-    <string name="user">user</string>
+    <string name="user">username</string>
     <string name="pass">password</string>
 
     <string name="icon_toggle">&#xf0c9;</string>
     <string name="icon_notif">&#xf0f3;</string>
-    <string name="extra_fee">EXTRA FEE</string>
+    <string name="icon_back">&#xf053;</string>
+    <string name="icon_logout">&#xf08b;</string>
+    <string name="icon_sub">&#xf147;</string>
+    <string name="icon_plus">&#xf196;</string>
 
+    <string name="extra_fee">EXTRA FEE</string>
+    <string name="update_dish">UPDATE DISH</string>
+    <string name="remove">Remove</string>
+    <string name="delete">Delete</string>
     <string name="hint_name">name</string>
     <string name="hint_price">price</string>
+    <string name="qty">Qty</string>
     <string name="description_extra_fee">Type extra fee of customer</string>
+
+    <string name="login_alert">Please enter username or password</string>
+    <string name="extra_fee_alert">Please enter name or price</string>
+    <string name="request_error">Error, please try agian!</string>
+    <string name="logout_question">Logout, Are you sure?</string>
+    <string name="delete_question">Do you want delete extra fee?</string>
+    <string name="remove_question">Do you want remove dish?</string>
+    <string name="login_fail">Username or password wrong!</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout">Logout</string>
+    <string name="table">Table</string>
+    <string name="waiter">Waiter</string>
+    <string name="call_waiter">call waiter</string>
 </resources>

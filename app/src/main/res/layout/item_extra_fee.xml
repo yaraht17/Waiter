@@ -4,39 +4,38 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-
-    <CheckBox
-        android:id="@+id/checkItem"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="0.5"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:gravity="center" />
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/dishAvatar"
+    <TextView
+        android:id="@+id/txtExtraFeeAvatar"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="3dp"
-        android:src="@drawable/avatar_dish" />
+        android:gravity="center"
+        android:src="@drawable/avatar_dish"
+        android:text="@string/icon_plus"
+        android:textColor="@color/background_title"
+        android:textSize="25sp" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="2"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/dishName"
+                android:id="@+id/txtExtraFeeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -45,45 +44,20 @@
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/dishPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$ 65"
-                android:textColor="@color/textColorTmp"
-                android:textSize="18sp"
-                android:textStyle="bold" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-
-            android:background="#DADADC" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/dishQty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Qty: 1"
-                android:textColor="@color/textColorTmp"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
 
         <TextView
-            android:id="@+id/dishTotal"
+            android:id="@+id/txtExtraFeePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
