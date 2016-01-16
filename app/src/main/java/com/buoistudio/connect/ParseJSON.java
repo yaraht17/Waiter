@@ -28,8 +28,8 @@ public class ParseJSON {
         int slotNumber = 0;
 
         try {
-            id = response.getString(Constants.ID);
             name = response.getString(Constants.NAME);
+            id = response.getString(Constants.ID_SUB);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,10 +41,14 @@ public class ParseJSON {
         String id = "";
         int count = 0, status = 0;
         DishItem dish = new DishItem();
-
+        String name = "", image = "";
+        double price = 0;
         try {
-            id = response.getString(Constants.ID);
-            dish = parseDish(response.getJSONObject(Constants.DISH));
+            id = response.getString(Constants.ID_SUB);
+            name = response.getString(Constants.NAME);
+            price = response.getDouble(Constants.PRICE);
+            image = response.getString(Constants.IMAGE);
+            dish = new DishItem(name, price, image);
             count = response.getInt(Constants.COUNT);
             status = response.getInt(Constants.STATUS);
         } catch (JSONException e) {
@@ -52,22 +56,6 @@ public class ParseJSON {
         }
         DishOrder dishOrder = new DishOrder(id, dish, count, status);
         return dishOrder;
-    }
-
-    public static DishItem parseDish(JSONObject response) {
-        String name = "", image = "";
-        double price = 0;
-
-        try {
-            name = response.getString(Constants.NAME);
-            price = response.getDouble(Constants.PRICE);
-            image = response.getString(Constants.IMAGE);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        DishItem dish = new DishItem(name, price, image);
-        return dish;
-
     }
 
     public static ExtraFeeItem parseExtraFee(JSONObject response) {

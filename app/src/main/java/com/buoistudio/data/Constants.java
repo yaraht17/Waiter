@@ -9,11 +9,11 @@ public class Constants {
     public static final String URL_SERVER = "http://52.25.229.209:3000";
 
     public static final String URL_GET_TOKEN = URL_SERVER + "/access-token";
-    public static final String URL_LOGOUT = URL_SERVER + "/waitter/logout";
-    public static final String URL_GET_TABLE = URL_SERVER + "/waitter/tables";
-    public static final String URL_GET_PROFILE = URL_SERVER + "/waitter/profile";
-    public static final String URL_GET_ORDER_OF_TABLE = URL_SERVER + "/waitter/" + TABLE_ID_REPLACE + "/orders";
-    public static final String URL_UPDATE_STATUS = URL_SERVER + "/waitter/orders/status";
+    public static final String URL_LOGOUT = URL_SERVER + "/waiter/logout";
+    public static final String URL_GET_TABLE = URL_SERVER + "/waiter/tables";
+    public static final String URL_GET_PROFILE = URL_SERVER + "/waiter/profile";
+    public static final String URL_GET_ORDER_OF_TABLE = URL_SERVER + "/waiter/" + TABLE_ID_REPLACE + "/orders";
+    public static final String URL_UPDATE_STATUS = URL_SERVER + "/waiter/orders/status";
     public static final String URL_UPDATE_QTY = URL_SERVER + "/waiter/" + TABLE_ID_REPLACE + "/order/" + DISH_ID_REPLACE;
     public static final String URL_REMOVE_DISH = URL_SERVER + "/waiter/" + TABLE_ID_REPLACE + "/order/" + DISH_ID_REPLACE;
     public static final String URL_GET_EXTRA_FEE = URL_SERVER + "/waiter/" + TABLE_ID_REPLACE + "/extrafees";
@@ -29,6 +29,7 @@ public class Constants {
 
     //table info
     public static final String ID = "id";
+    public static final String ID_SUB = "_id";
     public static final String SLOT_NUMBER = "slot_number";
 
     //json filed

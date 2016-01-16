@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -81,11 +84,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //get token
         sharedPreferences = getSharedPreferences(Constants.WAITER_PREFERENCES, Context.MODE_PRIVATE);
         accessToken = sharedPreferences.getString(Constants.ACCESS_TOKEN, "");
 
         setContentView(R.layout.activity_home);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
         tableList = (GridView) findViewById(R.id.gridview);
         txtWaiterName = (TextView) findViewById(R.id.txtWaiterName);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -100,12 +105,17 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         itemSize = (screenWidth - 150) / 3;
 
         setupDrawer();
+
+        //open socket
         mSocket.connect();
         mSocket.on(Constants.MESSAGE, onMessage);
+
+        //get data
         getProfile();
         getTable();
         tableList.setOnItemClickListener(this);
 
+        //event swipe down in layout
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -118,15 +128,32 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        //set color for swipe loading
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        tableList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (tableList == null || tableList.getChildCount() == 0) ?
+                                0 : tableList.getChildAt(0).getTop();
+                swipeContainer.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+            }
+        });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //close socket
         mSocket.disconnect();
         mSocket.off(Constants.MESSAGE);
 
@@ -184,7 +211,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         JSONObject userInfo = response.getJSONObject(Constants.RESULT);
                         user = ParseJSON.parseUser(userInfo);
 
-                        //send username
+                        //send username for socket server
                         JSONObject userJSON = new JSONObject();
                         userJSON.put(Constants.USERNAME, user.getUsername());
                         mSocket.emit(Constants.WAITER_SOCKET, userJSON);
@@ -292,6 +319,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case R.id.btnNotification:
+                //cache notification when don't hava new notification
                 if (!hasNotif) {
                     tableCall = tableCallCache;
                 }
@@ -300,6 +328,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
 
                 if (hasNotif) {
+                    //clear notification and save notification in tableCallCache
                     btnNotification.setTextColor(Color.WHITE);
                     tableCallCache = (ArrayList<TableItem>) tableCall.clone();
                     tableCall.clear();
@@ -320,11 +349,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private Emitter.Listener onMessage = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
+            //event hava notification when customer call waiter
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
                     hasNotif = true;
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    // Vibrate for 1000 milliseconds
+                    v.vibrate(1000);
                     tableCallCache.clear();
                     Log.d("buoistudio", "onMessage: " + data.toString());
                     btnNotification.setTextColor(Color.RED);

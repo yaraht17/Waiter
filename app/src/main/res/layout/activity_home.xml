@@ -5,73 +5,80 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/main"
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/background_waiter">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/include">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <RelativeLayout
+                    android:id="@+id/layoutWaiterName"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+
+                    android:background="@drawable/background_waiter_name">
+
+                    <TextView
+                        android:id="@+id/tableList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/waiter"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtWaiterName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tableList"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="30sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/contents"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/layoutWaiterName">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:indeterminate="true"
+                        android:rotation="90" />
+
+                    <include layout="@layout/grid_view" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/layout_topbar"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/background_waiter">
+            android:layout_height="60dp" />
+    </RelativeLayout>
 
-
-            <RelativeLayout
-                android:id="@+id/layoutWaiterName"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_below="@+id/include"
-                android:background="@drawable/background_waiter_name">
-
-                <TextView
-                    android:id="@+id/tableList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/waiter"
-                    android:textColor="@color/textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtWaiterName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tableList"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="30sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/contents"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/layoutWaiterName">
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:indeterminate="true"
-                    android:rotation="90" />
-
-                <include layout="@layout/grid_view" />
-
-            </RelativeLayout>
-
-            <include
-                android:id="@+id/include"
-                layout="@layout/layout_topbar"
-                android:layout_width="fill_parent"
-                android:layout_height="60dp" />
-        </RelativeLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ListView
         android:id="@+id/left_drawer"

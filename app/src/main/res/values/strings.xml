@@ -32,4 +32,6 @@
     <string name="table">Table</string>
     <string name="waiter">Waiter</string>
     <string name="call_waiter">call waiter</string>
+    <string name="minutes_ago">minutes ago</string>
+    <string name="hours_ago">hours ago</string>
 </resources>

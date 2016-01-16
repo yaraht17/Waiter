@@ -39,6 +39,7 @@ public class CustomDrawerAdapter extends ArrayAdapter<DrawerItem> {
         View view = convertView;
         DrawerItem dItem = (DrawerItem) this.drawerItemList.get(position);
         if (view == null) {
+            //item settings
             if (dItem.getItemName() != null) {
                 drawerHolder = new DrawerItemHolder();
                 view = inflater.inflate(R.layout.custom_drawer_item_setting, parent, false);
@@ -54,7 +55,7 @@ public class CustomDrawerAdapter extends ArrayAdapter<DrawerItem> {
                 drawerHolder.icon.setText(dItem.getImgResID());
                 view.setTag(drawerHolder);
             } else {
-                //header
+                //item header
                 drawerHolder = new DrawerItemHolder();
                 view = inflater.inflate(R.layout.custom_drawer_item, parent, false);
 

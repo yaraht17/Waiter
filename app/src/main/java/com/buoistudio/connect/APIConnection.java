@@ -36,14 +36,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update user: " + response);
+                        Log.d("buoistudio", "login: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "login: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -64,14 +64,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", response.toString());
+                        Log.d("buoistudio", "request: " + response.toString());
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", error.toString());
+                        Log.d("buoistudio", "request: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -104,14 +104,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update status: " + response);
+                        Log.d("buoistudio", "update dish status: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "update dish err: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -140,14 +140,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update status: " + response);
+                        Log.d("buoistudio", "update qty status: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "update qty err: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -171,14 +171,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update status: " + response);
+                        Log.d("buoistudio", "remove dish status: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "remove dish err: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -206,14 +206,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update status: " + response);
+                        Log.d("buoistudio", "add extra fee status: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "add extra fee err: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -236,14 +236,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update status: " + response);
+                        Log.d("buoistudio", "get extra fee status: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "get extra fee err: " + error.toString());
                         callback.onError(error);
                     }
                 }) {
@@ -267,14 +267,14 @@ public class APIConnection {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("buoistudio", "update status: " + response);
+                        Log.d("buoistudio", "delete extra fee status: " + response);
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("buoistudio", "update err: " + error.toString());
+                        Log.d("buoistudio", "delete extra fee err: " + error.toString());
                         callback.onError(error);
                     }
                 }) {

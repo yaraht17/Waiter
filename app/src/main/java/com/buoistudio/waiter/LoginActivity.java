@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -83,11 +85,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         try {
                             String status = response.getString(Constants.STATUS);
                             if (status.equals(Constants.SUCCESS)) {
+                                //save token
                                 accessToken = response.getString(Constants.ACCESS_TOKEN);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(Constants.ACCESS_TOKEN, accessToken);
                                 editor.commit();
-
                                 intentHome();
                             } else {
                                 showToast(getString(R.string.login_fail));

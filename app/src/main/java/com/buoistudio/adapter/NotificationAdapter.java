@@ -64,7 +64,19 @@ public class NotificationAdapter extends ArrayAdapter<TableItem> {
             viewHolder.tableNumber.setText(item.getName());
             long current = System.currentTimeMillis();
             long timeWait = current - item.getTimeCall();
-            viewHolder.time.setText(String.valueOf(timeWait));
+            long timeSeconds = timeWait / 1000;
+            //set time
+            String time = "";
+            if (timeSeconds < 60) {
+                time = "now";
+            } else if (timeSeconds > 60 && timeSeconds < 3600) {
+                long minutes = timeSeconds / 60;
+                time = minutes + " " + context.getString(R.string.minutes_ago);
+            } else if (timeSeconds > 3600) {
+                long hour = timeSeconds / 3600;
+                time = hour + " " + context.getString(R.string.hours_ago);
+            }
+            viewHolder.time.setText(String.valueOf(time));
 
         } else {
             viewHolder = (ViewHolder) row.getTag();

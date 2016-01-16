@@ -16,6 +16,9 @@ public class ExtraFeeItem {
         this.price = price;
     }
 
+    public ExtraFeeItem() {
+    }
+
     public String getId() {
         return id;
     }

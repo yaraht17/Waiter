@@ -15,6 +15,7 @@ public class DishOrder {
         this.count = count;
         this.status = status;
         isExtraFee = false;
+        extraFee = new ExtraFeeItem();
     }
 
     public DishOrder(ExtraFeeItem extraFee, boolean isExtraFee) {

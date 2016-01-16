@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TableAdapter extends ArrayAdapter<TableItem> {
     private Context mContext;
     private ArrayList<TableItem> items;
-    int size;
+    int size; //size for item
 
     public TableAdapter(Context c, int size, ArrayList<TableItem> items) {
         super(c, size, items);

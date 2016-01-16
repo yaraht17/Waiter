@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,8 +59,12 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
+        //get token
         sharedPreferences = getSharedPreferences(Constants.WAITER_PREFERENCES, Context.MODE_PRIVATE);
         accessToken = sharedPreferences.getString(Constants.ACCESS_TOKEN, "");
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         table = (TableItem) getIntent().getSerializableExtra(Constants.TABLE_EXTRA);
@@ -74,11 +80,16 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         btnConfirm.setOnClickListener(this);
         btnExtraFee.setOnClickListener(this);
         listDish.setOnItemClickListener(this);
+
+
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 progressBar.setVisibility(View.GONE);
-                refresh();
+                if (dishAdapter != null) {
+                    dishAdapter.clear();
+                }
+                getOrderOfTable();
             }
         });
 
@@ -86,6 +97,21 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        listDish.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (listDish == null || listDish.getChildCount() == 0) ?
+                                0 : listDish.getChildAt(0).getTop();
+                swipeContainer.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+            }
+        });
     }
 
 
@@ -101,9 +127,12 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         btnNotification.setVisibility(View.INVISIBLE);
     }
 
+    //get new data from server
     private void refresh() {
         progressBar.setVisibility(View.VISIBLE);
-        dishAdapter.clear();
+        if (dishAdapter != null) {
+            dishAdapter.clear();
+        }
         getOrderOfTable();
 
     }
@@ -137,7 +166,10 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                     showToast(getString(R.string.request_error));
                 }
+                Log.d("buoistudio", "List Size when get dish: " + dishItems.size());
                 totalDishOrder = getTotal(dishItems);
+                dishAdapter = new DishAdapter(getApplicationContext(), -1, dishItems);
+                listDish.setAdapter(dishAdapter);
                 //get Extra Fee for table
                 APIConnection.getExtraFee(getApplicationContext(), table, accessToken, new VolleyCallback() {
                     @Override
@@ -163,6 +195,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                         }
                         dishAdapter = new DishAdapter(getApplicationContext(), -1, dishItems);
                         listDish.setAdapter(dishAdapter);
+                        Log.d("buoistudio", "List Size: " + dishItems.size());
                         txtTotal.setText(String.valueOf(totalDishOrder + totalExtraFee));
                     }
 
@@ -209,6 +242,8 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         Button btnConfirm = (Button) dialog.findViewById(R.id.btnConfirm);
         final EditText edtExtraFeeName = (EditText) dialog.findViewById(R.id.edtExtraFeeName);
         final EditText edtExtraFeePrice = (EditText) dialog.findViewById(R.id.edtExtraFeePrice);
+
+        //event add extra fee
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,6 +279,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         dialog.show();
     }
 
+    //update dish order when served
     private void confirm() {
         if (dishAdapter == null) return;
         try {
@@ -272,6 +308,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    //update qty of dish
     private void update(DishOrder dish, int qty) {
         try {
             APIConnection.updateDishQty(getApplicationContext(), dish, table, qty, accessToken, new VolleyCallback() {
@@ -292,6 +329,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    //delete dish
     private void remove(DishOrder dish) {
         APIConnection.removeDishOrder(getApplicationContext(), dish, table, accessToken, new VolleyCallback() {
             @Override
@@ -317,7 +355,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("buoistudio", "Click Item");
         final DishOrder dishOrder = (DishOrder) dishItems.get(position);
         if (!dishOrder.isExtraFee()) {
             final Dialog dialog = new Dialog(TableActivity.this);
@@ -337,6 +374,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             edQty.setText(String.valueOf(dishOrder.getCount()));
             txtSub.setTypeface(font_awesome);
             txtPlus.setTypeface(font_awesome);
+
             txtSub.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -399,6 +437,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         String[] items = {getString(R.string.delete)};
         AlertDialog.Builder dialog = new Builder(this);
         dialog.setTitle(extraFee.getName());
+        dialog.setCancelable(true);
         dialog.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
